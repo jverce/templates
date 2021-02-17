@@ -14,6 +14,6 @@
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
-  "include": ["**/*.ts"],
+  "include": ["index.ts"],
   "exclude": ["node_modules"]
 }

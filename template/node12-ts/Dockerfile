@@ -46,7 +46,7 @@ RUN npm run build && \
 WORKDIR /home/app/
 
 # Copy outer function files
-COPY *.ts ./
+COPY *.ts tsconfig.json ./
 RUN npm run build
 
 ENV cgi_headers="true"
