@@ -26,10 +26,6 @@ COPY package.json ./
 # This ordering means the npm installation is cached for the outer function handler.
 RUN npm install
 
-# Copy outer function files
-COPY *.ts ./
-RUN npm run build
-
 # COPY function node packages and install, adding this as a separate
 # entry allows caching of npm install
 
@@ -43,10 +39,15 @@ COPY function/ ./
 
 # Run any tests that may be available
 RUN npm run build && \
+    npm run lint && \
     npm test
 
 # Set correct permissions to use non root user
 WORKDIR /home/app/
+
+# Copy outer function files
+COPY *.ts ./
+RUN npm run build
 
 ENV cgi_headers="true"
 ENV fprocess="node .build"

@@ -1,33 +1,36 @@
 import { IncomingHttpHeaders } from 'http2';
 import { ParsedQs } from 'qs';
 
+export type FunctionEventBody = string;
+export type FunctionEventQuery = ParsedQs;
+export type FunctionEventHeaders = IncomingHttpHeaders;
 export interface IFunctionEvent {
-  body: string;
-  headers: IncomingHttpHeaders;
-  query: ParsedQs;
+  body: FunctionEventBody;
+  headers: FunctionEventHeaders;
+  query: FunctionEventQuery;
   method: string;
   path: string;
 }
 
-export type ICallback = (err: any, functionResult?: any) => any;
+export type ICallback = (err: unknown, functionResult?: unknown) => unknown;
 
 export interface IFunctionContext {
   getStatus: () => number;
   status: (value: number) => IFunctionContext;
-  getHeaders: () => object;
-  headers: (value: object) => IFunctionContext;
-  succeed: (value: any) => IFunctionContext;
-  fail: (value: any) => IFunctionContext;
+  getHeaders: () => IncomingHttpHeaders;
+  headers: (value: IncomingHttpHeaders) => IFunctionContext;
+  succeed: (value: unknown) => IFunctionContext;
+  fail: (value: unknown) => IFunctionContext;
 }
 
-export type Handler = (
+export type Handler<T> = (
   event: IFunctionEvent,
   context: IFunctionContext,
   callback?: ICallback,
-) => any;
+) => T;
 
-export type AsyncHandler = (
+export type AsyncHandler<T> = (
   event: IFunctionEvent,
   context: IFunctionContext,
   callback?: ICallback,
-) => Promise<any>;
+) => Promise<T>;

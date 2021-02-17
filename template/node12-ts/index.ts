@@ -13,7 +13,11 @@ import {
   Response,
 } from 'express-serve-static-core';
 
-import { handler } from './function/handler';
+import { handler } from './function';
+import {
+  FunctionEventHeaders,
+  FunctionEventQuery,
+} from './function/.build/types';
 import { IFunctionEvent, IFunctionContext, ICallback } from './function/types';
 
 const defaultMaxSize = '100kb'; // body-parser default
@@ -55,7 +59,7 @@ if (useRawBody === 'true') {
 class FunctionEvent implements IFunctionEvent {
   body = '';
   headers = {};
-  query: object;
+  query: FunctionEventQuery;
   method: string;
   path: string;
 
@@ -91,7 +95,7 @@ class FunctionContext implements IFunctionContext {
     return this.headerValues;
   }
 
-  headers(value: object) {
+  headers(value: FunctionEventHeaders) {
     this.headerValues = value;
     return this;
   }

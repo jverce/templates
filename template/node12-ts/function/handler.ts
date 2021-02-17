@@ -1,17 +1,11 @@
 'use strict';
 
-import {
-  AsyncHandler,
-  ICallback,
-  IFunctionContext,
-  IFunctionEvent,
-} from './types';
+import { AsyncHandler, IFunctionContext, IFunctionEvent } from './types';
 
-export const handler: AsyncHandler = async (
+export const handler: AsyncHandler<IFunctionContext> = async (
   event: IFunctionEvent,
   context: IFunctionContext,
-  callback?: ICallback,
-): Promise<any> => {
+) => {
   const result = {
     'body': JSON.stringify(event.body),
     'content-type': event.headers['content-type'],
